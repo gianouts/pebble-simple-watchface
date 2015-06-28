@@ -18,7 +18,7 @@
             },
             {
                 "file": "fonts/OpenSans-Bold.ttf",
-                "name": "FONT_OPENSANS_BOLD_48",
+                "name": "FONT_OPENSANS_BOLD_64",
                 "type": "font"
             }
         ]
