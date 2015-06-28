@@ -1,0 +1,36 @@
+{
+    "appKeys": {
+        "KEY_CONDITIONS": 1,
+        "KEY_TEMPERATURE": 0
+    },
+    "capabilities": [
+        ""
+    ],
+    "companyName": "gianouts@yahoo.com",
+    "longName": "Simon G's Clean Watchface",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "fonts/OpenSans-Light.ttf",
+                "name": "FONT_OPENSANS_LIGHT_20",
+                "type": "font"
+            },
+            {
+                "file": "fonts/OpenSans-Bold.ttf",
+                "name": "FONT_OPENSANS_BOLD_48",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Simon G's Clean Watchface",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "0dea7221-b0ec-40c3-b7d9-04e5de8651e5",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
