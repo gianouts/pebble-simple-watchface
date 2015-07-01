@@ -4,7 +4,7 @@
         "KEY_TEMPERATURE": 0
     },
     "capabilities": [
-        ""
+        "location"
     ],
     "companyName": "gianouts@yahoo.com",
     "longName": "Simon G's Clean Watchface",
@@ -12,13 +12,14 @@
     "resources": {
         "media": [
             {
-                "file": "fonts/OpenSans-Light.ttf",
-                "name": "FONT_OPENSANS_LIGHT_20",
+                "characterRegex": "[0-9]",
+                "file": "fonts/OpenSans-Bold.ttf",
+                "name": "FONT_OPENSANS_BOLD_70",
                 "type": "font"
             },
             {
-                "file": "fonts/OpenSans-Bold.ttf",
-                "name": "FONT_OPENSANS_BOLD_64",
+                "file": "fonts/OpenSans-Light.ttf",
+                "name": "FONT_OPENSANS_LIGHT_20",
                 "type": "font"
             }
         ]

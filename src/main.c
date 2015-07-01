@@ -81,16 +81,16 @@ static void main_window_load(Window *window) {
 */
   
   //Create GFont
-  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_OPENSANS_BOLD_64));
+  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_OPENSANS_BOLD_70));
   s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_OPENSANS_LIGHT_20));
   s_weather_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_OPENSANS_LIGHT_20));
   s_battery_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_OPENSANS_LIGHT_20));
 
   // Create date layer TextLayer
-  s_date_layer = text_layer_create(GRect(0, 0, 139, 50));
+  s_date_layer = text_layer_create(GRect(0, 0, 144, 25));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, GColorWhite);
-  text_layer_set_text_alignment(s_date_layer, GTextAlignmentLeft);
+  text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
   text_layer_set_text(s_date_layer, "");
   text_layer_set_font(s_date_layer, s_date_font);
 
@@ -105,7 +105,7 @@ static void main_window_load(Window *window) {
 */
   
   // Create hour TextLayer
-  s_hour_layer = text_layer_create(GRect(5, 10, 139, 70));
+  s_hour_layer = text_layer_create(GRect(64, 11, 80, 80));
   text_layer_set_background_color(s_hour_layer, GColorClear);
   text_layer_set_text_color(s_hour_layer, GColorFromRGB(255, 0, 0));
   text_layer_set_text_alignment(s_hour_layer, GTextAlignmentRight);
@@ -113,23 +113,23 @@ static void main_window_load(Window *window) {
   text_layer_set_font(s_hour_layer, s_time_font);
   
   // Create minute TextLayer
-  s_minute_layer = text_layer_create(GRect(5, 67, 139, 70));
+  s_minute_layer = text_layer_create(GRect(64, 70, 80, 80));
   text_layer_set_background_color(s_minute_layer, GColorClear);
   text_layer_set_text_color(s_minute_layer, GColorFromRGB(255, 0, 0));
   text_layer_set_text_alignment(s_minute_layer, GTextAlignmentRight);
   text_layer_set_text(s_minute_layer, "");
   text_layer_set_font(s_minute_layer, s_time_font);
   
-  // Create temperature Layer
-  s_weather_layer = text_layer_create(GRect(0, 130, 144, 25));
+  // Create weather Layer
+  s_weather_layer = text_layer_create(GRect(0, 143, 144, 25));
   text_layer_set_background_color(s_weather_layer, GColorClear);
   text_layer_set_text_color(s_weather_layer, GColorWhite);
-  text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
+  text_layer_set_text_alignment(s_weather_layer, GTextAlignmentCenter);
   text_layer_set_text(s_weather_layer, ""); 
   text_layer_set_font(s_weather_layer, s_weather_font);
 
   // Create battery TextLayer
-  s_battery_layer = text_layer_create(GRect(0, 20, 144, 25));
+  s_battery_layer = text_layer_create(GRect(5, 24, 42, 25));
   text_layer_set_background_color(s_battery_layer, GColorClear);
   text_layer_set_text_color(s_battery_layer, GColorWhite);
   text_layer_set_text_alignment(s_battery_layer, GTextAlignmentLeft);
@@ -137,10 +137,10 @@ static void main_window_load(Window *window) {
   text_layer_set_font(s_battery_layer, s_battery_font);
   
   // Add layers as a child layer to the Window's root layer
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_date_layer));
   //layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_hour_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_minute_layer));
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_date_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_weather_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_battery_layer));
   
