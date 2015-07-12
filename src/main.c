@@ -10,6 +10,7 @@ static TextLayer *s_minute_layer;
 static TextLayer *s_date_layer;
 static TextLayer *s_weather_layer;
 static TextLayer *s_battery_layer;
+static Layer *s_graphical_battery_layer;
 
 static GFont s_time_font;
 static GFont s_date_font;
@@ -23,7 +24,8 @@ static GFont s_battery_font;
 static char temperature_buffer[8];
 static char conditions_buffer[32];
 static char weather_layer_buffer[32];
-
+static char s_battery_buffer[32];
+static uint8_t s_battery_charge_percent;
 
 static void update_time() {
   // Get a tm structure
@@ -63,12 +65,32 @@ static void update_time() {
 
 }
 
+static void graphical_battery_layer_draw(Layer *layer, GContext *ctx) {
+  GRect bounds = layer_get_bounds(layer);
+  
+  // Draw a white filled rectangle with sharp corners
+  graphics_context_set_fill_color(ctx, GColorRed);
+  graphics_fill_rect(ctx, bounds, 0, GCornerNone);
+  
+  if (s_battery_charge_percent > 0) {
+    //battery_charge_bounds = GRect(5, s_battery_charge_percent/2, 20, 10);
+    //graphics_fill_rect(ctx, battery_charge_bounds, 0, GCornerNone);
+    for (uint8_t i=0; i<(s_battery_charge_percent/10);i++){
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Loop index now %d and s_battery_charge_percent now %d", i, s_battery_charge_percent);
+      graphics_context_set_fill_color(ctx, GColorGreen);
+      graphics_fill_rect(ctx, GRect((2*i), 0, 1, 10), 0, GCornerNone);
+    }
+  } else {
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery Empty");
+  }
+}
+
 static void battery_handler(BatteryChargeState new_state) {
   // Write to buffer and display
-  static char s_battery_buffer[32];
-  
   snprintf(s_battery_buffer, sizeof(s_battery_buffer), "%d%%", new_state.charge_percent);
   text_layer_set_text(s_battery_layer, s_battery_buffer);
+  
+  s_battery_charge_percent = new_state.charge_percent;
 }
 
 static void main_window_load(Window *window) {
@@ -129,13 +151,17 @@ static void main_window_load(Window *window) {
   text_layer_set_font(s_weather_layer, s_weather_font);
 
   // Create battery TextLayer
-  s_battery_layer = text_layer_create(GRect(5, 24, 42, 25));
+  s_battery_layer = text_layer_create(GRect(5, 24, 52, 25));
   text_layer_set_background_color(s_battery_layer, GColorClear);
   text_layer_set_text_color(s_battery_layer, GColorWhite);
   text_layer_set_text_alignment(s_battery_layer, GTextAlignmentLeft);
   text_layer_set_text(s_battery_layer, ""); 
   text_layer_set_font(s_battery_layer, s_battery_font);
   
+  // Create graphical battery 
+  s_graphical_battery_layer = layer_create(GRect(5, 50, 19, 10));
+  layer_set_update_proc(s_graphical_battery_layer, graphical_battery_layer_draw);  
+    
   // Add layers as a child layer to the Window's root layer
   //layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_hour_layer));
@@ -143,6 +169,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_date_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_weather_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_battery_layer));
+  layer_add_child(window_get_root_layer(window), s_graphical_battery_layer);
   
   // Get the current battery level
   battery_handler(battery_state_service_peek());
@@ -170,6 +197,9 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(s_minute_layer);
   text_layer_destroy(s_weather_layer);
   text_layer_destroy(s_battery_layer);
+  
+  //Destroy graphical layers
+  layer_destroy(s_graphical_battery_layer);
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
