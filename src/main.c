@@ -78,7 +78,7 @@ static void graphical_battery_layer_draw(Layer *layer, GContext *ctx) {
     for (uint8_t i=0; i<(s_battery_charge_percent/10);i++){
       //APP_LOG(APP_LOG_LEVEL_DEBUG, "Loop index now %d and s_battery_charge_percent now %d", i, s_battery_charge_percent);
       graphics_context_set_fill_color(ctx, GColorGreen);
-      graphics_fill_rect(ctx, GRect((2*i), 0, 1, 10), 0, GCornerNone);
+      graphics_fill_rect(ctx, GRect((2*i), 0, 2, 10), 0, GCornerNone);
     }
   } else {
       //APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery Empty");
